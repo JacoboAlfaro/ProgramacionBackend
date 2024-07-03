@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  fullname         String?
+  first_surname    String?
+  second_surname   String?
+  identification   String    @unique
+  email            String    @unique
+  password         String
+  avatar           String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  Session          Session[]
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Superhero {
+  id             Int      @id @default(autoincrement())
+  real_name      String
+  superhero_name String   @unique
+  powers         String
+  universe       String
+  debilities     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Dealership {
+  id             Int      @id @default(autoincrement())
+  name           String
+  city           String
+  address        String
+  vehicle_brands String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  fullname  String?
+  email     String   @unique
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id         Int        @id @default(autoincrement())
+  tittle     String     @unique
+  content    String?
+  published  Boolean    @default(false)
+  authorId   Int
+  author     Author     @relation(fields: [authorId], references: [id])
+  categories Category[] @relation("PostToCategory")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  posts     Post[]   @relation("PostToCategory")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostToCategory {
+  postId     Int
+  categoryId Int
+
+  @@id([postId, categoryId])
+  @@map("PostToCategory")
+}
