@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage})
 
-router.post('/new-user', authenticatedToken, upload.single('avatar'),userController.createUser)
+router.post('/', authenticatedToken, upload.single('avatar'),userController.createUser)
 router.get('/', userController.getUsers)
 router.get('/:id', userController.getUserById)
-router.patch('/edit/:id', authenticatedToken, upload.single('avatar'), userController.updateUserById)
-router.delete('/remove/:id',authenticatedToken,  userController.deleteUserById)
+router.patch('/:id', authenticatedToken, upload.single('avatar'), userController.updateUserById)
+router.delete('/:id',authenticatedToken,  userController.deleteUserById)
 
 
 module.exports = router;

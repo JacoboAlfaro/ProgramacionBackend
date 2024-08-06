@@ -95,3 +95,9 @@ model PostToCategory {
   @@id([postId, categoryId])
   @@map("PostToCategory")
 }
+
+model Test {
+  id       Int    @id @default(autoincrement())
+  name     String
+  lastname String
+}

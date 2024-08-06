@@ -1,11 +1,12 @@
 const express = require('express')
 const categoryController = require('../controllers/CategoryController')
+const authenticatedToken = require("../middlewares/authMiddleware")
 const router = express.Router();
 
-router.post('/new-category', categoryController.createCategory)
-router.get('/', categoryController.getCategories)
-router.get('/:id', categoryController.getCategoryById)
-router.patch('/update-category/:id', categoryController.updateCategory)
-router.delete('/delete-category/:id', categoryController.deleteCategoryById)
+router.post('/', authenticatedToken, categoryController.createCategory)
+router.get('/', authenticatedToken, categoryController.getCategories)
+router.get('/:id', authenticatedToken, categoryController.getCategoryById)
+router.patch('/:id', authenticatedToken, categoryController.updateCategory)
+router.delete('/:id', authenticatedToken, categoryController.deleteCategoryById)
 
 module.exports = router

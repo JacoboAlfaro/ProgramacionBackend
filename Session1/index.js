@@ -9,6 +9,7 @@ const superHeroRoutes = require("./src/routes/superHeroRoutes")
 const dealershipRoutes = require("./src/routes/dealershipRoutes")
 const sessionRoutes = require("./src/routes/sessionRoutes")
 const authRoutes = require("./src/routes/authRoutes")
+const authorRoutes = require("./src/routes/authorRoutes")
 
 const postRoutes = require("./src/routes/postRoutes")
 const categoryRoutes = require("./src/routes/categoryRoutes")
@@ -36,6 +37,8 @@ app.use('/auth', authRoutes)
 app.use('/sessions', sessionRoutes)
 app.use('/posts', postRoutes)
 app.use('/categories', categoryRoutes)
+app.use('/authors', authorRoutes)
+
 
 app.listen(PORT, () =>{
     console.log(`Connection to port ${PORT}`)
